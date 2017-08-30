@@ -5,6 +5,14 @@
  */
 package student;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Anish
@@ -15,6 +23,7 @@ public class login extends javax.swing.JFrame {
      * Creates new form login
      */
     public login() {
+        super("Create a New Thread");
         initComponents();
     }
 
@@ -32,9 +41,9 @@ public class login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        username = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
@@ -60,8 +69,8 @@ public class login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24)); // NOI18N
         jLabel3.setText("Password");
 
-        jTextField1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        username.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
+        username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jButton1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24)); // NOI18N
         jButton1.setText("Back");
@@ -73,6 +82,11 @@ public class login extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
         jButton2.setText("LOG IN");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -84,11 +98,11 @@ public class login extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPasswordField1)))
+                        .addComponent(password)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
@@ -107,11 +121,11 @@ public class login extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(102, 102, 102)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(username)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordField1)
+                    .addComponent(password)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -138,6 +152,37 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Start().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+        Class.forName("com.mysql.jdbc.Driver");  
+            Connection con=DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/forum","root","root");
+            Statement stmt=con.createStatement();
+            Statement stmt2=con.createStatement();
+            String user=username.getText();
+            String pwd=password.getText();
+        //set this values using PreparedStatement
+        ResultSet results = stmt.executeQuery("SELECT username,password FROM ssignup where username='"+user+"' and password='"+pwd+"'");
+        ResultSet results2 = stmt2.executeQuery("SELECT username,password FROM tsignup where username='"+user+"' and password='"+pwd+"'");
+        if(!results.next() && !results2.next()) {
+            JOptionPane.showMessageDialog(null,"Invalid Username or Password");
+        }
+        else
+        {
+            this.dispose();
+            new Loading().setVisible(true);
+        }
+
+    } catch (SQLException sql) {
+
+        System.out.println(sql);
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"Invalid Credentials!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,7 +228,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
