@@ -59,7 +59,7 @@ public void run(){
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 560));
         getContentPane().setLayout(null);
 
         jProgressBar1.setBackground(new java.awt.Color(204, 0, 0));

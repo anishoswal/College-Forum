@@ -8,6 +8,8 @@ package student;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.*;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -18,7 +20,7 @@ import javax.swing.JOptionPane;
  * @author Anish
  */
 public class login extends javax.swing.JFrame {
-
+static String users,passwords;
     /**
      * Creates new form login
      */
@@ -42,13 +44,13 @@ public class login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        back = new javax.swing.JButton();
         password = new javax.swing.JPasswordField();
-        jButton2 = new javax.swing.JButton();
+        submit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
+        setPreferredSize(new java.awt.Dimension(965, 630));
         getContentPane().setLayout(null);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -72,19 +74,19 @@ public class login extends javax.swing.JFrame {
         username.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
         username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24)); // NOI18N
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        back.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24)); // NOI18N
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
-        jButton2.setText("LOG IN");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        submit.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
+        submit.setText("LOG IN");
+        submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                submitActionPerformed(evt);
             }
         });
 
@@ -108,9 +110,9 @@ public class login extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 819, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
@@ -129,8 +131,8 @@ public class login extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(submit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
 
@@ -148,12 +150,13 @@ public class login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         new Start().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
         try {
         Class.forName("com.mysql.jdbc.Driver");  
@@ -161,8 +164,12 @@ public class login extends javax.swing.JFrame {
                     "jdbc:mysql://localhost:3306/forum","root","root");
             Statement stmt=con.createStatement();
             Statement stmt2=con.createStatement();
+            Statement stmt3=con.createStatement();
             String user=username.getText();
             String pwd=password.getText();
+            users=user;
+            passwords=pwd;
+            Queue<String> info=new LinkedList<>();
         //set this values using PreparedStatement
         ResultSet results = stmt.executeQuery("SELECT username,password FROM ssignup where username='"+user+"' and password='"+pwd+"'");
         ResultSet results2 = stmt2.executeQuery("SELECT username,password FROM tsignup where username='"+user+"' and password='"+pwd+"'");
@@ -182,7 +189,7 @@ public class login extends javax.swing.JFrame {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null,"Invalid Credentials!");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_submitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,8 +227,7 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton back;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -229,6 +235,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPasswordField password;
+    private javax.swing.JButton submit;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

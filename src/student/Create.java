@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import static student.login.users;
 
 /**
  *
@@ -49,15 +50,14 @@ public class Create extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1360, 720));
-        setMinimumSize(new java.awt.Dimension(1360, 720));
-        setPreferredSize(new java.awt.Dimension(1360, 720));
+        setPreferredSize(new java.awt.Dimension(1000, 680));
         getContentPane().setLayout(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
         jPanel1.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Trajan Pro 3", 0, 52)); // NOI18N
-        jLabel1.setText("    create a new thread");
+        jLabel1.setText("     CREATE A NEW THREAD");
         jLabel1.setToolTipText("");
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
         jLabel1.setFocusable(false);
@@ -180,9 +180,15 @@ public class Create extends javax.swing.JFrame {
             Object yr=(String)cat.getSelectedItem();
             Statement stmt=con.createStatement();
             java.sql.Timestamp date=new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-            //java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-            int ins=stmt.executeUpdate("INSERT INTO posts(title,description,category,datetime) VALUES('"+ttl+"','"+des+"','"+yr+"','"+date+"')");
+            if("".equals(ttl))
+            {
+                JOptionPane.showMessageDialog(null,"Please Do Not Leave Fields Blank!");
+            }
+            else
+            {
+            int ins=stmt.executeUpdate("INSERT INTO posts(title,description,category,datetime,username) VALUES('"+ttl+"','"+des+"','"+yr+"','"+date+"','"+users+"')");
             JOptionPane.showMessageDialog(null,"Congratulations! Your Question has been Posted\nYou can view your Post in our VIEW FORUMS section.");
+            }
         } catch(Exception e){ 
                 JOptionPane.showMessageDialog(null,"Please Enter Valid Characters using Appropriate Language!");
                 System.out.println(e);}

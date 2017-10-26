@@ -40,7 +40,7 @@ public class CATEGORIES extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1300, 720));
+        setPreferredSize(new java.awt.Dimension(950, 720));
         getContentPane().setLayout(null);
 
         jPanel1.setOpaque(false);
@@ -150,9 +150,10 @@ public class CATEGORIES extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 0, 911, 670);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Anish\\Downloads\\SecureAPlus-For-Education-Background.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Anish\\Downloads\\bg-nonsolo.jpg")); // NOI18N
+        jLabel3.setPreferredSize(new java.awt.Dimension(1200, 800));
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 1090, 690);
+        jLabel3.setBounds(0, 0, 930, 690);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

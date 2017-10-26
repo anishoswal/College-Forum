@@ -53,8 +53,7 @@ public class ques1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
-        setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(930, 750));
         getContentPane().setLayout(null);
 
         jPanel1.setOpaque(false);
@@ -214,7 +213,7 @@ public class ques1 extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 10, 890, 730);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Anish\\Downloads\\freegreatpicture-com-19820-blue-vintage-wallpaper-background.jpg")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Anish\\Downloads\\bg-nonsolo.jpg")); // NOI18N
         getContentPane().add(jLabel7);
         jLabel7.setBounds(0, 0, 910, 680);
 

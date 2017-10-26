@@ -62,7 +62,7 @@ import javax.swing.JOptionPane;
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
+        setPreferredSize(new java.awt.Dimension(950, 600));
         getContentPane().setLayout(null);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -79,6 +79,7 @@ import javax.swing.JOptionPane;
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("STUDENT SIGN UP");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Please enter all your valid details in order to create an Account!");
 
         jLabel4.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
@@ -231,15 +232,15 @@ import javax.swing.JOptionPane;
         );
 
         jPanel3.add(jPanel4);
-        jPanel4.setBounds(10, 28, 900, 520);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/resources/home-parallax-background.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jPanel3.add(jLabel1);
-        jLabel1.setBounds(-10, 0, 940, 560);
+        jPanel4.setBounds(10, 10, 900, 520);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(10, 11, 933, 564);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/student/resources/copy.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 940, 560);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -269,9 +270,16 @@ import javax.swing.JOptionPane;
             String em=email.getText();
             String user=username.getText();
             Object yr=(String)year.getSelectedItem();
+            Statement stmt2=con.createStatement();
+            ResultSet results;
+            results = stmt2.executeQuery("SELECT username FROM tsignup where username='"+user+"'");
             if(!pwd.equals(cpwd))
             {
                 JOptionPane.showMessageDialog(null," The Passwords Don't Match!");
+            }
+            else if(results.next())
+            {
+                JOptionPane.showMessageDialog(null," The Username Already Exists");
             }
             else
             {
